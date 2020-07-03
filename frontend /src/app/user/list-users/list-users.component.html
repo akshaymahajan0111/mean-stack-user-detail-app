@@ -1,0 +1,23 @@
+<div>
+  <h2 class="inactive underlineHover">User List</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rowData of userList; trackBy: trackById; index as i"
+          [ngStyle]="{'background-color': rowData.addColor ? '#FFFFE0' : '#fff'}">
+          <td>{{(i + 1)}}</td>
+          <ng-template ngFor let-columnKey [ngForOf]="tableHeaders">
+            <td [class]="columnKey" [innerHTML]="cellData(rowData, columnKey)"></td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

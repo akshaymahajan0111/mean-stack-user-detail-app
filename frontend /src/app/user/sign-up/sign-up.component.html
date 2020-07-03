@@ -1,0 +1,52 @@
+<h2 class="inactive underlineHover">Sign Up </h2>
+
+<div style="margin: 20px;">
+  <label class="hoverable" for="fileInput">
+    <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" width="200" height="200">
+    <div class="background"></div>
+  </label>
+  <br />
+  <input id="fileInput" type='file' (change)="onSelectFile($event)">
+  <button *ngIf="url" (click)="delete()">delete</button>
+</div>
+
+<form #signUpForm="ngForm" (ngSubmit)="signUpForm.valid && onSubmit(signUpForm)">
+  <input type="text" #fullName="ngModel" [(ngModel)]="userService.selectedUser.fullName" name="fullName"
+    placeholder="Full Name" required [ngClass]="{'invalid-textbox' :signUpForm.submitted && !fullName.valid }">
+  <div *ngIf="signUpForm.submitted && !fullName.valid">
+    <label class="validation-message">This field is required.</label>
+  </div>
+
+  <input type="text" #mobile="ngModel" [(ngModel)]="userService.selectedUser.mobile" minlength=10 maxlength=10
+    (keypress)="keyPress($event)" name="mobile" placeholder="mobile" required
+    [ngClass]="{'invalid-textbox' :signUpForm.submitted && !userService.selectedUser.mobile.length }">
+  <div *ngIf="signUpForm.submitted && !userService.selectedUser.mobile">
+    <label class="validation-message">This field is required.</label>
+  </div>
+  <div *ngIf="signUpForm.submitted && (userService.selectedUser.mobile && userService.selectedUser.mobile.length<10 )">
+    <label class="validation-message">Invalid mobile number.</label>
+  </div>
+
+  <input type="text" #email="ngModel" [(ngModel)]="userService.selectedUser.email" name="email" placeholder="Email"
+    required [pattern]="emailRegex" [ngClass]="{'invalid-textbox' :signUpForm.submitted && !email.valid }">
+  <div *ngIf="signUpForm.submitted && email.errors">
+    <label *ngIf="email.errors.required" class="validation-message">This field is required.</label>
+    <label *ngIf="email.errors.pattern" class="validation-message">Invalid email address.</label>
+  </div>
+  <input type="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password" name="password"
+    placeholder="Password" minlength="4" required
+    [ngClass]="{'invalid-textbox' :signUpForm.submitted && !password.valid }">
+  <div *ngIf="signUpForm.submitted && password.errors">
+    <label *ngIf="password.errors.required" class="validation-message">This field is required.</label>
+    <label *ngIf="password.errors.minlength" class="validation-message">Enter atleast 4 characters.</label>
+  </div>
+  <input type="submit" value="Sign Up">
+</form>
+
+<div class="success" *ngIf="showSucessMessage">
+  Saved successfully
+</div>
+
+<div class="alert" *ngIf="serverErrorMessages">
+  {{serverErrorMessages}}
+</div>
