@@ -7,7 +7,7 @@ MEAN stack web application which has functionalities to register, list, update, 
 ### usage
 
 1. cd backend/ && npm install && node app.js
-2. cd ../frontend / && npm install && ng serve --open
+2. cd frontend / && npm install && ng serve --open
 
 ### screenshots
 
